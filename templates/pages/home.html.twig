@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/styles/css/home.css')}}">
+{% endblock %}
+
+{% block body %}
+<header>
+    
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+
+            {% for post in recentPosts|slice(0, 3) %}
+                
+            
+            <div class="swiper-slide">
+                <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="a woman cooking in the kitchen.">
+                <div class="content">
+                    <div class="container">
+                        <a class="main-title-link" href="{{ path('app_posts', {id: post.id}) }}">
+                            <h3 class="main-title">{{ post.title }}</h3>
+                        </a>
+                        <p>{{ post.body|striptags|slice(0, 300)|raw }}{{ post.body|length > 300 ? '...' }}</p>
+                        {# <p>{{ post.body|html_entity_decode|striptags|slice(0, 300) }}{{ post.body|length > 300 ? '...' }}</p> #}
+                    </div>
+                </div>
+            </div>
+                {% endfor %}
+            <!-- <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div> -->
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+
+        <div class="autoplay-progress">
+            <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="20"></circle>
+            </svg>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+</header>
+
+<main>
+
+    <section class="container">
+        <div class="title-tool">
+            <h2>Recent blog tutorials:</h2>
+            <a href="{{ path('app_feeds', {feeds: 'tutorials'}) }}">See all</a>
+        </div>
+        <div class="posts-row">
+            {% for post in postsTutorials %}
+                <a href="{{ path('app_post', {id: post.id}) }}">
+                    <figure class="card-main">
+                        <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="{{ post.featuredImage}}">
+                        <figcaption>
+                            <div>
+                                <h3>{{ post.title|slice(0, 33)|raw }}{{ post.title|length > 33 ? '...' : '' }}</h3>
+                                <p>{{ post.body|slice(0, 160)|raw }}{{ post.body|length > 160 ? '...' : '' }}</p>
+                            </div>
+
+                            <div class="meta-info-container">
+                                <img loading="lazy" src="{{ post.userId.imageProfile ? asset('assets/imgs/profile/' ~ post.userId.imageProfile) : asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="{{ post.userId.imageProfile }}">
+                                {# <img loading="lazy" src="{{asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="#"> #}
+                                <p>{{ post.userId.username }}</p>
+                                <p class="date">{{ post.createdAt|date('d-m-Y') }}</p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------------- -->
+    <section class="container">
+        <div class="title-tool">
+            <h2>Discover new tips...</h2>
+            <a href="{{ path('app_feeds', {feeds: 'lists'}) }}">See all</a>
+        </div>
+        <div class="posts-row container-list">
+            {% for post in postsLists %}
+                <a href="{{ path('app_post', {id: post.id}) }}">
+                    <figure class="card-side-content">
+                        <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="{{ post.featuredImage }}">
+                        <figcaption>
+                            <div>
+                                <h3>{{ post.title|slice(0, 33)|raw }}{{ post.title|length > 33 ? '...' : '' }}</h3>
+                                <p>{{ post.body|slice(0, 90)|raw }}{{ post.body|length > 90 ? '...' : '' }}</p>
+                            </div>
+                            <div class="meta-info-container">
+                                <img loading="lazy" src="{{ post.userId.imageProfile ? asset('assets/imgs/profile/' ~ post.userId.imageProfile) : asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="{{ post.userId.imageProfile }}">
+                                {# <img loading="lazy" src="{{asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="#"> #}
+                                <p>{{ post.userId.username }}</p>
+                                <p>{{ post.createdAt|date('d-m-Y') }}</p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

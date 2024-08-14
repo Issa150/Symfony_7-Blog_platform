@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Feeds {% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/styles/css/post.css')}}">
+{% endblock %}
+
+{% block body %}
+<main>
+    <section class="container">
+
+        <article>
+            <img src="{{ post.featuredImage ? 'assets/imgs/posts/' ~ post.featuredImage : 'assets/imgs/initials/placeholder.png' }}" alt="">
+            <div class="meta-info-container">
+                <img src="{{ post.userId.imageProfile ? 'assets/imgs/profile/' ~ post.userId.imageProfile : 'assets/imgs/profile/placeholder-man-img.jpg' }}" alt="Profile-author">
+                <p>{{ post.userId.username }}</p>
+                <!-- <i class="fa-solid fa-bookmark"></i> -->
+            </div>
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.body|raw }}</p>
+
+            <!--*************   Comments  ************** -->
+            {# <div class="input">
+                <h2>{% if commentsData is empty %}No comments yet{% else %}Comments{% endif %}</h2>
+                <!--********* Add new comments  ***********  -->
+                {% if app.user %}
+                    <div class="new-comment">
+                        <form action="" method="post">
+                            <textarea name="comment" id="" placeholder="please write your opinion..."></textarea>
+                            <p class="alert-msg">{{ commentErr ? commentErr : "" }}</p>
+                            <button>Submit</button>
+                        </form>
+
+                    </div>
+                {% else %}
+                    <div class="input">
+                        <h3 class="alert-red">Please login to add comment</h3>
+                        <textarea disabled name="" id="" placeholder="please write your opinion..."></textarea>
+                        <button disabled>Submit</button>
+                    </div>
+                {% endif %}
+
+                <!--********* show comments  ***********  -->
+                {% if commentsData %}
+                    {% for comment in commentsData %}
+                        <div class="comment">
+                            <div class="profile">
+                                <img src="{{ comment.commneterImg ? 'assets/imgs/profile/' ~ comment.commneterImg : 'assets/imgs/profile/placeholder-man-img.jpg' }}" alt="Profile-author">
+                                <p>{{ comment.commentorUsername }}</p>
+                            </div>
+                            <p class="input">{{ comment.commentText }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div> #}
+        </article>
+        
+        <aside>
+            <h4>Monthly archive:</h4>
+            <div class="months-wrapper">
+
+                {% for x in 1..6 %}
+                    <p class="monthes-archive">January</p>
+                {% endfor %}
+            </div>
+
+        </aside>
+
+    </section>
+</main>
+
+{% endblock %}

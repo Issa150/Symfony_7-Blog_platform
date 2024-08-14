@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %} Edit User {% endblock %} 
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/css/profile.css') }}" />
+{% endblock %} 
+
+{% block nav %} {% endblock %} 
+
+{% block body %}
+
+{% if is_granted('ROLE_USER') and user == app.user %}
+    <h1>Edit Users</h1>
+    {{ form_start(form) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.roles) }}
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.imageProfile) }}
+    {{ form_row(form.imageCover) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.country) }}
+    {{ form_row(form.gender) }}
+    {{ form_row(form.email) }}
+
+    <button type="submit">Submit</button>
+
+{{ form_end(form) }}
+{% else  %}
+    <h1>You don't have permission to access this page</h1>
+    {% endif %}
+
+{% endblock %}
+
+{% block footer %} {% endblock %}

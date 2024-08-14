@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Feeds {% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/styles/css/feeds.css')}}">
+{% endblock %}
+
+{% block body %}
+<main>
+    
+    <section class="container">
+
+        <div class="title-tool">
+            <h2>Recent blog {{ app.request.get('feeds') }}</h2>
+        </div>
+
+        <div class="posts-row">
+            {% if app.request.query.get('feeds') is defined  %}
+                {% if postFeeds|length == 0 %}
+                    <p>No posts yet</p>
+                {% else %}
+                    {% for post in postFeeds %}
+                        <a href="{{ path('app_post', {id: post.id}) }}">
+                            <figure class="card-main">
+                                <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="{{ post.featuredImage }}">
+                                <figcaption>
+                                    <h3>{{ post.title|slice(0, 33)|raw }}{{ post.title|length > 33 ? '...' : '' }}</h3>
+                                    <p>{{ post.body|slice(0, 160)|raw }}{{ post.body|length > 160 ? '...' : '' }}</p>
+                                    <div class="meta-info-container">
+                                        {# <img loading="lazy" src="{{ post.author_image ? asset('assets/imgs/profile/' ~ post.author_image) : asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="{{ post.author_image }}"> #}
+                                        <img loading="lazy" src="{{ asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="">
+                                        <p>{{ post.userId.firstname }} {{ post.userId.lastname }}</p>
+                                        <p>{{ post.createdAt|date('d-m-Y') }}</p>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Feeds {% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/styles/css/profile.css')}}">
+{% endblock %}
+{% block body %}
+<main class="container">
+    <aside>
+        <h1>User profile</h1>
+        <ul>
+            {# <li><a class="{% if app.request.query.get('profile') or app.request.query.all()|length == 0 %}active{% endif %}" href="{{ path('app_profile_index') }}"><i class="fa-solid fa-house-chimney-user"></i>Profile</a></li> #}
+            {# <li><a class="{% if app.request.query.get('user_info') or app.request.query.all()|length == 0 %}active{% endif %}" href="{{ path('app_profile_index', { user_info: true }) }}"><i class="fa-solid fa-user-pen"></i>User info</a></li> #}
+            <li><a class="{% if tab == 'user_info' %}active{% endif %}" href="{{ path('app_profile_tab', {'tab': 'user_info'}) }}"><i class="fa-solid fa-user-pen"></i>User info</a></li>
+            {# <li><a class="{% if app.request.query.get('favorite') %}active{% endif %}" href="{{ path('app_profile_index', { favorite: true }) }}"><i class="fa-solid fa-people-line"></i>Follows</a></li>
+            <li><a class="{% if app.request.query.get('watchlist') %}active{% endif %}" href="{{ path('app_profile_index', { watchlist: true }) }}"><i class="fa-solid fa-bookmark"></i>Saved</a></li>
+            <li><a class="{% if app.request.query.get('watchlist') %}active{% endif %}" href="{{ path('app_profile_index', { watchlist: true }) }}"><i class="fa-solid fa-users-rectangle"></i>Groups</a></li> #}
+            {# <li><a class="{% if app.request.query.get('account_setting') %}active{% endif %}" href="{{ path('app_profile_index', { account_setting: true }) }}"><i class="fa-solid fa-id-card"></i>Account setting</a></li> #}
+            <li><a class="{% if tab == 'account_setting' %}active{% endif %}" href="{{ path('app_profile_tab', {'tab': 'account_setting'}) }}"><i class="fa-solid fa-id-card"></i>Account setting</a></li>
+        </ul>
+    </aside>
+
+    {# <!-- -------------------------- --> #}
+    
+    <div class="info-detail">
+        {# {% if app.request.query.get('user_info') or app.request.query.all()|length == 0 %} #}
+        {% if tab == 'user_info' %}
+            {% include 'profile/partials/profile_info.html.twig' %}
+        {# {% elseif app.request.query.get('edit') %} #}
+        {% elseif tab == 'edit' %}
+            {% include 'profile/partials/edit.html.twig' %}
+        {# {% elseif app.request.query.get('posts') %}
+            {% include 'partials/userPosts.html.twig' %} #}
+        {# {% elseif app.request.query.get('account_setting') %} #}
+        {% elseif tab == 'account_setting' %}
+            {% include 'profile/partials/account_setting.html.twig' %}
+        {# {% elseif app.request.query.get('watchlist') %}
+            {% include 'partials/watchlist_user.html.twig' %} #}
+        {# {% elseif app.request.query.get('profile') %}
+            {% include 'partials/profile.html.twig' %} #} 
+        {% endif %}
+    </div>
+
+</main>
+
+{% endblock %}

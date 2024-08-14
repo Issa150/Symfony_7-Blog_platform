@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %} 
+{% block title %} Feeds {% endblock %} {% block
+stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/styles/css/profile.css') }}" />
+{% endblock %} 
+{% block nav %} {% endblock %} 
+{% block body %}
+
+{# <h2>Profile info</h2>
+{{ user.username }} #}
+
+<div class="head-info">
+
+    <label for="profile-cover">
+        <img src="{{ asset('assets/imgs/banner/' ~ (user.imageCover ?: 'pawel-czerwinski-7FqOISWr5V0-unsplash.jpg')) }}" alt="">
+
+    </label>
+
+    <div class="profile-img">
+        <label for="profile-img">
+            <img class="btn-modal" src="{{ asset('assets/imgs/profile/' ~ (user.imageProfile('current_user') ?: 'placeholder-general-img.png')) }}" alt="Image placeholder">
+            <i class="fa-solid fa-pen-to-square btn-modal"></i>
+        </label>
+    </div>
+
+    <div class="user-info">
+        <h3>
+            {{ user.firstname|default('Unknown user')|capitalize }} {{ user.lastname|default('...')|upper }}
+        </h3>
+        <span>{{ user.city|default('...') }},</span>
+        <span>{{ user.country|default('...') }}</span>
+    </div>
+</div>
+<div class="body-info">
+    <div class="info-block">
+        <h3>Basic information</h3>
+        <ul>
+            <li><strong>Firstname:</strong> {{ user.firstname }}</li>
+            <li><strong>Lastname:</strong> {{ user.lastname }}</li>
+            <li><strong>Username:</strong> {{ user.username }}</li>
+
+        </ul>
+    </div>
+    <div class="info-block">
+        <h3>Contact information</h3>
+        <ul>
+            <li><strong>Firstname:</strong> {{ user.email }}</li>
+
+        </ul>
+    </div>
+    <div class="info-block">
+        <h3>Living in</h3>
+        <ul>
+            <li><strong>city:</strong> {{ user.city }}</li>
+            <li><strong>country:</strong> {{ user.country }}</li>
+
+        </ul>
+    </div>
+    {% if canEdit %}
+    <div class="grid-full-width">
+        <!-- <button id="cancelModal" formmethod="dialog">Cancel</button> -->
+
+        <a href="{{path('app_profile_tab', {tab: 'edit'})}}" class="btn">modify</a>
+
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %} 
+{% block footer %} {% endblock %}

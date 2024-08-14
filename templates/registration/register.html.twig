@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %} 
+
+{% block stylesheets %}
+<link
+  rel="stylesheet"
+  href="{{ asset('assets/styles/css/signup-login.css') }}"
+/>
+{% endblock %} 
+{% block title %}Register{% endblock %} 
+
+{% block nav %} {% endblock %} 
+
+{% block body %} 
+{#
+<h1>Register</h1>
+
+{{ form_errors(registrationForm) }}
+
+{{ form_start(registrationForm) }}
+{{ form_row(registrationForm.username) }}
+{{
+  form_row(registrationForm.plainPassword, {
+    label: "Password"
+  })
+}}
+{{ form_row(registrationForm.agreeTerms) }}
+
+<button type="submit" class="btn">Register</button>
+{{ form_end(registrationForm) }} #}
+
+<form action="" method="post" id="signupForm">
+  {{ form_start(form) }}
+  <h2>Create your account</h2>
+  <div class="body">
+    <fieldset class="multi_wrap_input">
+      <div class="input_error_wrapper">
+        <div class="input-clone">
+          <i class="fa-solid fa-user"></i>
+          <div class="single_wrap_input">
+            {{ form_widget(form.firstname, { label: false }) }}
+            <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+          </div>
+        </div>
+        {{ form_errors(form.firstname) }}
+      </div>
+      <div class="input_error_wrapper">
+        <div class="input-clone">
+          <i class="fa-solid fa-user"></i>
+          <div class="single_wrap_input">
+            {{ form_widget(form.lastname, { label: false }) }}
+            <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+          </div>
+        </div>
+        {{ form_errors(form.lastname) }}
+      </div>
+    </fieldset>
+    <div class="input_error_wrapper">
+      <div class="input-clone">
+        <i class="fa-solid fa-id-badge"></i>
+        <div class="single_wrap_input">
+          {{ form_widget(form.username, { label: false }) }}
+          <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+        </div>
+      </div>
+      {{ form_errors(form.username) }}
+    </div>
+    <div class="input_error_wrapper">
+      <div class="input-clone">
+        <i class="fa-solid fa-envelope"></i>
+        <div class="single_wrap_input">
+          {{ form_widget(form.email, { label: false }) }}
+          <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+        </div>
+      </div>
+      {{ form_errors(form.email) }}
+    </div>
+    <div class="input_error_wrapper">
+      <div class="input-clone">
+        <i class="fa-solid fa-lock"></i>
+        <div class="single_wrap_input">
+          {{ form_widget(form.plainPassword, { label: false }) }}
+          <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+          <span class="showPassword" id="showPassword"
+            ><i class="fa-solid fa-eye"></i
+          ></span>
+        </div>
+      </div>
+      {{ form_errors(form.plainPassword) }}
+    </div>
+    <div class="input_error_wrapper">
+      <div class="input-clone">
+        <i class="fa-solid fa-lock"></i>
+        <div class="single_wrap_input">
+          {{ form_widget(form.passwordRepeat, { label: false }) }}
+          <i class="fa-solid fa-circle-exclamation" title="This field is required"></i>
+          <span class="showPassword" id="showPasswordRepeat"
+            ><i class="fa-solid fa-eye"></i
+          ></span>
+        </div>
+      </div>
+      {{ form_errors(form.passwordRepeat) }}
+    </div>
+
+    <div class="input_error_wrapper">
+      {#
+      <div class="input-clone">
+        #}
+        <div class="single_wrap_input text-left">
+            {{ form_widget(form.agreeTerms) }}
+            {{ form_label(form.agreeTerms,  null,{'label_attr': {'class': 'inline'}} ) }}
+        </div>
+        {#
+      </div>
+      #}
+      {{ form_errors(form.agreeTerms) }}
+    </div>
+    {{ form_end(form) }}
+    <button type="submit">Sign up</button>
+    <br />
+    <a href="login.php">You have already an account?😃</a>
+  </div>
+</form>
+
+{% endblock %} {% block footer %} {% endblock %}

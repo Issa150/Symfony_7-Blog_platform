@@ -1,0 +1,45 @@
+<nav>
+    <div class="container">
+        <a href="{{ path('app_home') }}">
+            <img class="logo" src="{{ asset('assets/imgs/Logo.png') }}" alt="Logo">
+        </a>
+        <ul class="responsive-nav">
+            <li><a href="{{ path('app_home') }}">Home</a></li>
+            <li>
+                <a href="#">Type of articles<i class="fa-solid fa-angle-down"></i></a>
+                <ul>
+                    <div>
+                        <li><a href="{{ path('app_feeds', {feeds: 'tutorials'}) }}"> Tutorials</a></li>
+                        <li><a href="{{ path('app_feeds', {feeds: 'lists'}) }}"> Lists</a></li>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="connection">
+            {% if app.user %}
+                <li>
+                    <a href='#'>
+                        <img src="{{ asset('assets/imgs/profile/' ~ (app.user.imageProfile ? app.user.imageProfile : 'placeholder-general-img.png')) }}" alt="Profile image holder">
+                        <span>{{ app.user.username|upper }}</span>
+                    </a>
+                    <ul>
+                        <div>
+                            <li><a href="{{ path('app_profile_tab', {tab: 'user_info'}) }}"><i class="fa-solid fa-house-chimney-user"></i> Profile</a></li>
+                            <!-- <li><a {#href="{{ path('account_user_info') }}"#}><i class="fa-regular fa-user"></i> user info</a></li> -->
+                            <li><a {# href="{{ path('admin_dashboard') }}" #}><i class="fa-solid fa-briefcase"></i> Backoffice</a></li>
+                            <!-- <li><a href=""><i class="fa-regular fa-heart"></i> Favorites</a></li> -->
+                            <li><a {# href="{{ path('account_settings') }}" #}><i class="fa-solid fa-id-card"></i>Account setting</a></li>
+                            <li><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                        </div>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">Login</a></li>
+                <li><a href="{{ path('app_register') }}">sign up</a></li>
+            {% endif %}
+        </ul>
+
+        <i class="fa-solid fa-bars hamburger_menu" id="hamburger_menu"></i>
+    </div>
+</nav>
