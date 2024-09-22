@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block nav %} {% endblock %} 
+
+{% block body %} 
+
+<main>
+
+    <section class="container">
+        <div class="title-tool">
+            <h2>Recent blog tutorials:</h2>
+            <a href="{{ path('app_feeds', {feeds: 'tutorials'}) }}">See all</a>
+        </div>
+        <div class="posts-row">
+            {% if postsTutorials %}
+            
+                {% for post in postsTutorials %}
+                    <a href="{{ path('app_post', {id: post.id}) }}">
+                        <figure class="card-main">
+                            <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="{{ post.featuredImage}}">
+                            <figcaption>
+                                <div>
+                                    <h3>{{ post.title|slice(0, 33)|raw }}{{ post.title|length > 33 ? '...' : '' }}</h3>
+                                    <p>{{ post.body|slice(0, 160)|raw }}{{ post.body|length > 160 ? '...' : '' }}</p>
+                                </div>
+
+                                <div class="meta-info-container">
+                                    <img loading="lazy" src="{{ post.userId.imageProfile ? asset('assets/imgs/profile/' ~ post.userId.imageProfile) : asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="{{ post.userId.imageProfile }}">
+                                    {# <img loading="lazy" src="{{asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="#"> #}
+                                    <p>{{ post.userId.username }}</p>
+                                    <p class="date">{{ post.createdAt|date('d-m-Y') }}</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>No post of this type made yet.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------------- -->
+    <section class="container">
+        <div class="title-tool">
+            <h2>Discover new tips...</h2>
+            <a href="{{ path('app_feeds', {feeds: 'lists'}) }}">See all</a>
+        </div>
+        <div class="posts-row container-list">
+            {% if postsLists %}
+            
+                {% for post in postsLists %}
+                    <a href="{{ path('app_post', {id: post.id}) }}">
+                        <figure class="card-side-content">
+                            <img loading="lazy" src="{{ post.featuredImage ? asset('assets/imgs/posts/' ~ post.featuredImage) : asset('assets/imgs/initials/placeholder.png') }}" alt="{{ post.featuredImage }}">
+                            <figcaption>
+                                <div>
+                                    <h3>{{ post.title|slice(0, 33)|raw }}{{ post.title|length > 33 ? '...' : '' }}</h3>
+                                    <p>{{ post.body|slice(0, 90)|raw }}{{ post.body|length > 90 ? '...' : '' }}</p>
+                                </div>
+                                <div class="meta-info-container">
+                                    <img loading="lazy" src="{{ post.userId.imageProfile ? asset('assets/imgs/profile/' ~ post.userId.imageProfile) : asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="{{ post.userId.imageProfile }}">
+                                    {# <img loading="lazy" src="{{asset('assets/imgs/profile/placeholder-general-img.png') }}" alt="#"> #}
+                                    <p>{{ post.userId.username }}</p>
+                                    <p>{{ post.createdAt|date('d-m-Y') }}</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </a>
+                {% endfor %}
+
+            {% else %}
+                <p>No post in this type made yet.</p>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{% endblock %} 
+
+
+{% block footer %} {% endblock %}

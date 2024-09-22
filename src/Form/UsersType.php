@@ -6,10 +6,11 @@ use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UsersType extends AbstractType
 {
@@ -19,28 +20,33 @@ class UsersType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Username',
             ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Roles',
-                'choices' => [
-                    'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
-                ],
-                'multiple' => true,
-                'expanded' => true,
-            ])
             ->add('firstname', TextType::class, [
                 'label' => 'Firstname',
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Lastname',
             ])
-            ->add('imageProfile', FileType::class, [
-                'label' => 'Profile Image',
-                'data_class' => null,
-            ])
             ->add('imageCover', FileType::class, [
-                'label' => 'Cover Image',
-                'data_class' => null,
+                'label' => 'Image Cover',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                    ]),
+                ],
+            ])
+            ->add('imageProfile', FileType::class, [
+                'label' => 'Image Profile',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                    ]),
+                ],
             ])
             ->add('city', TextType::class, [
                 'label' => 'City',

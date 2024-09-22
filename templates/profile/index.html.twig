@@ -11,7 +11,7 @@
         <h1>User profile</h1>
         <ul>
             {# <li><a class="{% if app.request.query.get('profile') or app.request.query.all()|length == 0 %}active{% endif %}" href="{{ path('app_profile_index') }}"><i class="fa-solid fa-house-chimney-user"></i>Profile</a></li> #}
-            {# <li><a class="{% if app.request.query.get('user_info') or app.request.query.all()|length == 0 %}active{% endif %}" href="{{ path('app_profile_index', { user_info: true }) }}"><i class="fa-solid fa-user-pen"></i>User info</a></li> #}
+            <li><a class="{% if tab == 'user_posts' %}active{% endif %}" href="{{ path('app_profile_tab', {'tab': 'user_posts'}) }}"><i class="fa-solid fa-house-chimney-user"></i>Posts</a></li>
             <li><a class="{% if tab == 'user_info' %}active{% endif %}" href="{{ path('app_profile_tab', {'tab': 'user_info'}) }}"><i class="fa-solid fa-user-pen"></i>User info</a></li>
             {# <li><a class="{% if app.request.query.get('favorite') %}active{% endif %}" href="{{ path('app_profile_index', { favorite: true }) }}"><i class="fa-solid fa-people-line"></i>Follows</a></li>
             <li><a class="{% if app.request.query.get('watchlist') %}active{% endif %}" href="{{ path('app_profile_index', { watchlist: true }) }}"><i class="fa-solid fa-bookmark"></i>Saved</a></li>
@@ -25,7 +25,9 @@
     
     <div class="info-detail">
         {# {% if app.request.query.get('user_info') or app.request.query.all()|length == 0 %} #}
-        {% if tab == 'user_info' %}
+        {% if tab == 'user_posts' %}
+            {% include 'profile/partials/user_posts.html.twig' %}
+        {% elseif tab == 'user_info' %}
             {% include 'profile/partials/profile_info.html.twig' %}
         {# {% elseif app.request.query.get('edit') %} #}
         {% elseif tab == 'edit' %}

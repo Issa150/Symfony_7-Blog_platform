@@ -63,4 +63,31 @@ class PostsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    ////******* user based posts:
+    public function findUserTutorials(int $limit = 5, int $userId): array
+{
+    return $this->createQueryBuilder('p')
+        ->join('p.contentTypeId', 'ct')
+        ->where('ct.title = :title AND p.userId = :userId')
+        ->setParameter('title', 'tutorials')
+        ->setParameter('userId', $userId)
+        ->orderBy('p.createdAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
+
+public function findUserLists(int $limit = 5, int $userId): array
+{
+    return $this->createQueryBuilder('p')
+        ->join('p.contentTypeId', 'ct')
+        ->where('ct.title = :title AND p.userId = :userId')
+        ->setParameter('title', 'lists')
+        ->setParameter('userId', $userId)
+        ->orderBy('p.createdAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
 }
