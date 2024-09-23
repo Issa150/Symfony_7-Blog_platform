@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{ asset('assets/styles/css/backoffice.css')}}">
+{% endblock %}
+
+
+{% block nav %}{% endblock %}
+
+
+{% block body %}
+<form method="post" action="{{ path('backoffice_posts_delete', {'id': post.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+    <button class="btn">Delete</button>
+</form>
+{% endblock %}

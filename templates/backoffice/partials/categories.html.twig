@@ -1,1 +1,50 @@
-<h2>categories.html.twig</h2>
+<div class="body-info">
+    <div class="control_bar">
+      <!-- <button class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></button> -->
+      <a href="{{ path('app_backoffice_index', { add_category: true }) }}" class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></a>
+  
+      <div class="meta-statistic">
+        <dl>
+          <dt>Total: </dt>
+          <dd>{{ datas|length }}</dd>
+        </dl>
+      </div>
+    </div>
+  
+    <div class="posts_container">
+      <div class="table table-categories">
+        <div class="grid-row">
+          <div class="header">Title</div>
+          <div class="header">Author</div>
+          <div class="header">Total</div>
+        </div>
+  
+        {% if datas|length == 0 %}
+          <p class="empty">No categories created yet 🫤</p>
+        {% else %}
+          {% for data in datas %}
+            <div class="grid-row">
+              <!-- Action btns -->
+              <div class="btns-container">
+                <a href="{{ path('admin_dashboard', { update_category: data.id }) }}" class="btn btn-link success">Modifier</a>
+                <a href="{{ path('admin_dashboard', { delete_category: data.id }) }}" class="btn btn-link delete">Suprimer</a>
+              </div>
+              <!-- Cells -->
+              <div class="grid-cell">
+                {{ data.title|slice(0, 40) }}{% if data.title|length > 40 %}...{% endif %}
+              </div>
+  
+              <div class="grid-cell">
+                {{ data.name }}
+              </div>
+  
+              <div class="grid-cell">
+                {# {{ general_class.counterJoin_3(categorie.id, session.current_user.id)["total"] }} #}
+                {{data.id}}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>

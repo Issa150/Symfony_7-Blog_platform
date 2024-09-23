@@ -1,0 +1,75 @@
+<div class="body-info">
+    {# <!-- ------------------ --> #}
+    <div class="control_bar">
+      {% if app.user.roles == "ROLE_ADMIN" %}
+        <!-- <button class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></button> -->
+        <a href="{{ path('app_backoffice_index', { add_theme: true }) }}" class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></a>
+      {% endif %}
+  
+      <!-- <div id="modal"> -->
+  
+  
+      <!-- </div> -->
+      <div class="meta-statistic">
+        <dl>
+          <dt>Total: </dt>
+          <dd>{{ datas|length }}</dd>
+        </dl>
+        {% if app.user.roles != "ROLE_ADMIN" %}
+          <span class="alert-msg">The themes are selected to align with the website's policies and objectives, ensuring content consistency</span>
+        {% endif %}
+      </div>
+    </div>
+  
+    <div class="posts_container">
+  
+  
+      <!-- // -->
+  
+      <div class="table table-thematics">
+        <div class="grid-row">
+          <div class="header">Title</div>
+          <div class="header">Description</div>
+          <div class="header">Total</div>
+        </div>
+        {% if datas|length == 0 %}
+          <p class="empty">No categories created yet 🫤</p>
+        {% else %}
+          {% for data in datas %}
+            <div class="grid-row">
+              <!-- Action btns -->
+              <div class="btns-container">
+                <a href="{{ path('app_backoffice_index', { update_theme: data.id }) }}" class="btn btn-link success">Modifier</a>
+                <a href="{{ path('app_backoffice_index', { delete_theme: data.id }) }}" class="btn btn-link delete">Suprimer</a>
+              </div>
+              <!-- Cells -->
+              <div class="grid-cell">
+                {{ data.title|slice(0, 40) }}{% if data.title|length > 40 %}...{% endif %}
+              </div>
+  
+              <div class="grid-cell">
+                {{ data.description }}
+              </div>
+  
+              <div class="grid-cell">
+                {# {{ general_class.counter('posts', 'thematic_id', data.id, session.current_user.id)["COUNT(*)"] }} #}
+                {# {{ posts.contentTypeId == 1 }} #}
+                {# {{ posts|filter(p => p.contentTypeId == attribute(data.id, 'id'))|length }} #}
+                {# {{ posts|filter(p => p.contentTypeIdId == attribute(data, 'id'))|length }} #}
+                {# {% for post in posts %}#}
+
+                {# {% set userPosts = posts|filter(p => p.contentTypeId == data.id and p.userId == app.user.id) %}
+                {{ userPosts|length }} #}
+                {# {% endfor %} #}
+                {{data.id}}
+                {# {% set currentContentTypeId = data.id %} #}
+                {# {{  currentContentTypeId }} #}
+                {# {{ posts|filter(p => p.contentTypeId == currentContentTypeId)|length }} #}
+
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>

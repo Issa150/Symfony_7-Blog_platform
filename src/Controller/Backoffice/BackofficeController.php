@@ -76,10 +76,15 @@ class BackofficeController extends AbstractController{
         // Get the all datas of each entities
         $entitieDatas = $repository->findAll();
 
+        // Providing posts entity for category and contenttype 
+        $postsRepository = $this->entityManager->getRepository(Posts::class);
+        $posts = $postsRepository->findAll();
         return $this->render('backoffice/index.html.twig', [
             'entities' => $this->entityNames,
             'datas' => $entitieDatas,
             'entity_name' => $entity,
+
+            'posts' => $posts,
         ]);
     }
     

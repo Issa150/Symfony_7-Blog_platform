@@ -30,9 +30,9 @@
                     <a href="{{ path('app_backoffice_entity_list', { entity: entity }) }}"
                     {% if app.request.pathInfo == path('app_backoffice_entity_list', { entity: entity }) %}
                         class="active"
-                    {% endif %}
-                    >
-                        {{ entity }}
+                    {% endif %}>
+                    
+                    {{ entity == 'ContentType' ? 'Content Type' : entity }}
                     </a>
                 </li>
             {% endfor %}
@@ -55,12 +55,12 @@
          {# {% if app.request.attributes.get('_route_params')['entity'] == 'Posts' or app.request.attributes.get('_route_params')['entity'] is empty %} #}
          {# {% if app.request.attributes.get('_route_params') is defined and app.request.attributes.get('_route_params')|length > 0 %}
             {% if app.request.attributes.get('_route_params')['entity'] == 'Posts' or app.request.attributes.get('_route_params')['entity'] is empty %} #}
-            {% if app.request.pathInfo == '/backoffice/' or (app.request.attributes.get('_route_params')['entity'] is defined and app.request.attributes.get('_route_params')['entity'] == 'Posts') %}
+        {% if app.request.pathInfo == '/backoffice/' or (app.request.attributes.get('_route_params')['entity'] is defined and app.request.attributes.get('_route_params')['entity'] == 'Posts') %}
             {{ include('backoffice/partials/posts.html.twig') }}
             {# {% endif %} #}
-        {#{% elseif app.request.get('thematics') %}
-            {{ include('partials/thematics.html.twig') }} #}
-             {% elseif app.request.attributes.get('_route_params')['entity'] == 'Categories' %}
+        {% elseif app.request.attributes.get('_route_params')['entity'] == 'ContentType' %}
+            {{ include('backoffice/partials/contentType.html.twig') }}
+        {% elseif app.request.attributes.get('_route_params')['entity'] == 'Categories' %}
             {{ include('backoffice/partials/categories.html.twig') }} 
         {#{% elseif app.request.get('publications_insight') %}
             {{ include('partials/publications_insight.html.twig') }}

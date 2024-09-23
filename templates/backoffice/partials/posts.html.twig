@@ -1,9 +1,94 @@
+{#
 <h2>posts.html.twig</h2>
 dd
-<br>
-{# {{posts}} #}
+<br />
 {% for data in datas %}
-    {{data.title}}
+{{ data.title }}
 
-    <br>
-{% endfor %}
+<br />
+{% endfor %} #}
+<div class="body-info">
+  {#
+  <!-- ----------- -->
+  #}
+  <div class="control_bar">
+    <!-- <button class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></button> -->
+    <a
+      href="{{ path('app_backoffice_index', { add_post: true }) }}"
+      
+      class="btn openDialog"
+      id="open-modal"
+      >Create new <i class="fa-regular fa-square-plus"></i
+    ></a>
+
+    <div class="meta-statistic">
+      <dl>
+        <dt>Published:</dt>
+        <dd>{{ datas|filter(d => d.published == true)|length }}</dd>
+      </dl>
+      <dl>
+        <dt>Draft:</dt>
+        <dd>{{ datas|filter(d => d.published == false)|length }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Total:</dt>
+        <dd>{{ datas | length }}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="posts_container">
+    {#
+    <!-- ----------------------------- -->
+    #}
+    <div class="table table-posts">
+      <div class="grid-row">
+        <div class="header">Title</div>
+        <div class="header">Author</div>
+        <div class="header">Type d'article</div>
+        <div class="header">Category</div>
+        <div class="header">Dates</div>
+      </div>
+
+      {% for data in datas %}
+      <div class="grid-row">
+        <!-- Action btns -->
+        <div class="btns-container">
+          <a
+            href="{{ path('backoffice_posts_edit', { id: data.id }) }}"
+           
+            class="btn btn-link success"
+            >Modifier</a
+          >
+          <a
+            href="{{ path('backoffice_posts_delete', { id: data.id }) }}"
+           
+            class="btn btn-link delete"
+            >Suprimer</a
+          >
+        </div>
+        <!-- Cells -->
+        <div class="grid-cell">
+          {{ data.title|slice(0, 40) }}{% if data.title|length > 40 %}...{%
+          endif %}
+        </div>
+
+        <div class="grid-cell">
+          {{ data.userId.username }}
+        </div>
+
+        <div class="grid-cell">
+          {{ data.contentTypeId.title }}
+        </div>
+
+        <div class="grid-cell">
+          {{ data.categorieId|default("<span class='no-choice'>No category!</span>") }}
+        </div>
+
+        <div class="grid-cell">{{ data.createdAt|date("d-m-Y") }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
