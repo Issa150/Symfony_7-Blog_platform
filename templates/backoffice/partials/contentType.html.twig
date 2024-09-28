@@ -39,8 +39,8 @@
             <div class="grid-row">
               <!-- Action btns -->
               <div class="btns-container">
-                <a href="{{ path('app_backoffice_index', { update_theme: data.id }) }}" class="btn btn-link success">Modifier</a>
-                <a href="{{ path('app_backoffice_index', { delete_theme: data.id }) }}" class="btn btn-link delete">Suprimer</a>
+                <a href="{{ path('app_content_type_edit', { id: data.id }) }}" class="btn btn-link success">Modifier</a>
+                <a href="{{ path('app_content_type_delete', { id: data.id }) }}" class="btn btn-link delete">Suprimer</a>
               </div>
               <!-- Cells -->
               <div class="grid-cell">

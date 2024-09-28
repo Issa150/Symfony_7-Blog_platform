@@ -42,15 +42,15 @@ class PostsController extends AbstractController
         ]);
     }
 
-    #[Route('backoffice/posts/{id}', name: 'backoffice_posts_show', methods: ['GET'])]
-    public function show(Posts $post): Response
-    {
-        return $this->render('posts/show.html.twig', [
-            'post' => $post,
-        ]);
-    }
+    // #[Route('backoffice/posts/{id}', name: 'backoffice_posts_show', methods: ['GET'])]
+    // public function show(Posts $post): Response
+    // {
+    //     return $this->render('posts/show.html.twig', [
+    //         'post' => $post,
+    //     ]);
+    // }
 
-    #[Route('backoffice/posts/{id}/edit', name: 'backoffice_posts_edit', methods: ['GET', 'POST'])]
+    #[Route('backoffice/Posts/{id}/edit', name: 'backoffice_posts_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PostsType::class, $post);
@@ -63,6 +63,7 @@ class PostsController extends AbstractController
         }
 
         return $this->render('posts/edit.html.twig', [
+        // return $this->render('backoffice/index.html.twig', [
             'post' => $post,
             'form' => $form,
         ]);

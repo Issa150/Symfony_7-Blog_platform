@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Home{% endblock %}
@@ -51,14 +52,26 @@
         </ul>
     </aside>
     <div class="info-detail">
-         
+         {# {% if app.request.get('posts') or app.request.query is empty %} #}
+         {# {% if app.request.attributes.get('_route_params')['entity'] == 'Posts' or app.request.attributes.get('_route_params')['entity'] is empty %} #}
+         {# {% if app.request.attributes.get('_route_params') is defined and app.request.attributes.get('_route_params')|length > 0 %}
+            {% if app.request.attributes.get('_route_params')['entity'] == 'Posts' or app.request.attributes.get('_route_params')['entity'] is empty %} #}
         {% if app.request.pathInfo == '/backoffice/' or (app.request.attributes.get('_route_params')['entity'] is defined and app.request.attributes.get('_route_params')['entity'] == 'Posts') %}
             {{ include('backoffice/partials/all_posts.html.twig') }}
+            {# {% endif %} #}
         {% elseif app.request.attributes.get('_route_params')['entity'] == 'ContentType' %}
             {{ include('backoffice/partials/contentType.html.twig') }}
         {% elseif app.request.attributes.get('_route_params')['entity'] == 'Categories' %}
             {{ include('backoffice/partials/categories.html.twig') }} 
-        
+        {#{% elseif app.request.get('publications_insight') %}
+            {{ include('partials/publications_insight.html.twig') }}
+        {% elseif app.request.get('update_post') or app.request.get('add_post') %}
+            {{ include('partials/forms/add_update_post.html.twig') }}
+        {% elseif app.request.get('update_theme') or app.request.get('add_theme') %}
+            {{ include('partials/forms/add_update_theme.html.twig') }}
+        {% elseif app.request.get('update_category') or app.request.get('add_category') %}
+            {{ include('partials/forms/add_update_category.html.twig') }}#}
+        {# {% endif %}  #}
 
         {% elseif path('post_new') %}
             {{ include('post/new.html.twig') }}
