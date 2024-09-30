@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 // #[Route('/posts')]
 class PostsController extends AbstractController
 {
-    // #[Route('backoffice/posts', name: 'app_posts_index', methods: ['GET'])]
+    // #[Route('backoffice/posts', name: 'posts_index', methods: ['GET'])]
     // public function index(PostsRepository $postsRepository): Response
     // {
     //     return $this->render('posts/index.html.twig', [
@@ -33,12 +33,13 @@ class PostsController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('backoffice_entity_list', ['entity'=> 'Posts'], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/new.html.twig', [
+        return $this->render('backoffice/index.html.twig', [
             'post' => $post,
             'form' => $form,
+            'entities' => ['Categories','ContentType','Posts',],
         ]);
     }
 
@@ -59,13 +60,15 @@ class PostsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_backoffice_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('backoffice_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('backoffice_entity_list', ['entity'=> 'Posts'], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/edit.html.twig', [
+        return $this->render('backoffice/index.html.twig', [
         // return $this->render('backoffice/index.html.twig', [
             'post' => $post,
             'form' => $form,
+            'entities' => ['Categories','ContentType','Posts',],
         ]);
     }
 
@@ -77,6 +80,7 @@ class PostsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_backoffice_index', [], Response::HTTP_SEE_OTHER);
+        // return $this->redirectToRoute('backoffice_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('backoffice_entity_list', ['entity'=> 'Posts'], Response::HTTP_SEE_OTHER);
     }
 }

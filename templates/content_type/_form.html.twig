@@ -1,4 +1,39 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+{{ form_start(form) }}
+
+    {% if app.request.get('_route') == 'content_type_new' %}
+        <h2>Add a new content type</h2>
+    {% elseif app.request.get('_route') == 'content_type_edit' %}
+        <h2>Update the content type</h2>
+    {% endif %}
+
+    <p class="alert-msg">{{ form_errors(form) }}</p>
+
+    <fieldset class="grid-col-6">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        <p class="alert-msg">{{ form_errors(form.title) }}</p>
+    </fieldset>
+
+    <fieldset class="grid-col-6">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <p class="alert-msg">{{ form_errors(form.description) }}</p>
+    </fieldset>
+
+    <fieldset class="grid-col-3">
+        {{ form_label(form.userId) }}
+        {{ form_widget(form.userId) }}
+        <p class="alert-msg">{{ form_errors(form.userId) }}</p>
+    </fieldset>
+
+    <div class="grid-full-width">
+        <a id="cancelModal" href="{{ path('backoffice_index') }}" class="btn">Cancel</a>
+        <button class="btn btn-success" type="submit">{{ button_label|default('Save') }}</button>
+    </div>
+
 {{ form_end(form) }}

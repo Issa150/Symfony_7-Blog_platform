@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}New ContentType{% endblock %}
+{% block nav %}{% endblock %}
+{# {% block title %}New ContentType{% endblock %} #}
 
 {% block body %}
     <h1>Create new ContentType</h1>
 
     {{ include('content_type/_form.html.twig') }}
 
-    <a href="{{ path('app_content_type_index') }}">back to list</a>
+    {# <a href="{{ path('backoffice_entity_list', {entity:'ContentType'}) }}">back to list</a> #}
 {% endblock %}
+{% block footer %}{% endblock %}

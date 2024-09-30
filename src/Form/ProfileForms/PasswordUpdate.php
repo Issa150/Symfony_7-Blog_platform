@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\ProfileForms;
 
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class UserAccountSettingType extends AbstractType
+class PasswordUpdate extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -33,41 +33,31 @@ class UserAccountSettingType extends AbstractType
                     new Regex(['pattern' => '/[!@#$%^&*(),.?":{}|<>]/', 'message' => 'Password should contain at least one special character']),
                 ],
             ])
-            // ->add('passwordRepeat', PasswordType::class, [
-            //     'mapped' => false,
-            //     'label' => 'Please repeat the password',
-            //     'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Repeat password'],
-            //     'constraints' => [
-            //         new Assert\NotBlank([
-            //             'message' => 'Please enter a password',
-            //         ]),
-            //         new Assert\Callback(function ($object, ExecutionContextInterface $context) {
-            //             $form = $context->getRoot(); // Get the form
-            //             $plainPassword = $form->get('password')->getData();
-            //             $passwordRepeat = $form->get('passwordRepeat')->getData();
+            ->add('passwordRepeat', PasswordType::class, [
+                'mapped' => false,
+                'label' => 'Please repeat the password',
+                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Repeat password'],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Assert\Callback(function ($object, ExecutionContextInterface $context) {
+                        $form = $context->getRoot(); // Get the form
+                        $plainPassword = $form->get('password')->getData();
+                        $passwordRepeat = $form->get('passwordRepeat')->getData();
                         
-            //             if (!empty($plainPassword) && empty($passwordRepeat)) {
-            //                 $context->buildViolation('Please repeat your password')
-            //                     ->atPath('passwordRepeat')
-            //                     ->addViolation();
-            //             } elseif (!empty($plainPassword) && $plainPassword !== $passwordRepeat) {
-            //                 $context->buildViolation('The passwords does not match')
-            //                     ->atPath('passwordRepeat')
-            //                     ->addViolation();
-            //             }
-            //         }),
-            //     ],
-
-            // ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Roles',
-                'choices' => [
-                    'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
+                        if (!empty($plainPassword) && empty($passwordRepeat)) {
+                            $context->buildViolation('Please repeat your password')
+                                ->atPath('passwordRepeat')
+                                ->addViolation();
+                        } elseif (!empty($plainPassword) && $plainPassword !== $passwordRepeat) {
+                            $context->buildViolation('The passwords does not match')
+                                ->atPath('passwordRepeat')
+                                ->addViolation();
+                        }
+                    }),
                 ],
-                'multiple' => true,
-                'expanded' => true,
-                'mapped' => true,
+
             ])
         ;
     }

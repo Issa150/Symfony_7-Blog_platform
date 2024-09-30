@@ -2,6 +2,8 @@
 
 namespace App\Controller\Backoffice;
 
+use App\Entity\Categories;
+use App\Entity\ContentType;
 use App\Entity\Posts;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-#[Route('/backoffice', name: 'app_backoffice_')]
+#[Route('/backoffice', name: 'backoffice_')]
 class BackofficeController extends AbstractController{
 
     private $entityManager;
@@ -34,30 +36,21 @@ class BackofficeController extends AbstractController{
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        // Get a list of all entities (e.g., from a config file or database)
-        // $entities = [
-        //     // 'User',
-        //     'Product',
-        //     'Category',
-        //     // ...
-        // ];
-        // $entities = $this->entityManager->getMetadataFactory()->getAllMetadata();
-        // $entityNames = array_map(function ($metadata) {
-        //     $entityName = basename($metadata->getName());
-        //     if (!in_array($entityName, ['Users', 'Admin'])) {
-        //         return $entityName;
-        //     }
-        //     return null; // return null if the entity should be excluded
-        // }, $entities);
         
-        // $entityNames = array_filter($entityNames);
+        
         
         
         $postsRepository = $this->entityManager->getRepository(Posts::class);
-        $posts = $postsRepository->findAll();
+        $posts = count($postsRepository->findAll());
+        $categorieRepository = $this->entityManager->getRepository(Categories::class);
+        $categories = count($categorieRepository->findAll());
+        $contentTypeRepository = $this->entityManager->getRepository(ContentType::class);
+        $contenttypes = count($contentTypeRepository->findAll());
         return $this->render('backoffice/index.html.twig', [
             'entities' => $this->entityNames,
-            'datas' => $posts,
+            'postTotal' => $posts,
+            'contentTypesTotal' => $contenttypes,
+            'categoriesTotal' => $categories,
         ]);
 
     }

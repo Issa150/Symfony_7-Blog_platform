@@ -34,75 +34,33 @@
                 <span>{{ user.country }}</span>
             </div>
         </div>
+        
         {{ form_start(form) }}
-        <div class="body-info">
-            <fieldset class="grid-col-3">
-                <label>Profile Picture:</label>
-                {# {{ form_errors(form.imageProfile) }}
-                {{ form_widget(form.imageProfile, { 'attr': { 'id': 'profile-picture' } }) }} #}
-            </fieldset>
+            <div class="body-info">
+                <fieldset class="grid-col-3">
+                    <label>Password:</label>
+                    {{ form_errors(form.password) }}
+                    {{ form_widget(form.password) }}
+                </fieldset>
 
-            <fieldset class="grid-col-3">
-                <label>Profile Cover:</label>
-                {# {{ form_errors(form.imageCover) }}
-                {{ form_widget(form.imageCover, { 'attr': { 'id': 'profile-cover' } }) }} #}
-                
-            </fieldset>
+                <fieldset>
+                    <label>Roles:</label>
+                    {{ form_errors(form.roles) }}
+                    <ul>
+                        {% for child in form.roles %}
+                            <li>
+                                {{ form_widget(child) }}
+                                {{ child.vars.label }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </fieldset>
 
-            <fieldset class="grid-col-3">
-                <label>Name:</label>
-                {{ form_errors(form.firstname) }}
-                {{ form_widget(form.firstname) }}
-            </fieldset>
-
-            <fieldset class="grid-col-3">
-                <label>Family Name:</label>
-                {{ form_errors(form.lastname) }}
-                {{ form_widget(form.lastname) }}
-            </fieldset>
-
-            <fieldset class="grid-col-3">
-                <label>User Name:</label>
-                {{ form_errors(form.username) }}
-                {{ form_widget(form.username) }}
-            </fieldset>
-
-            <fieldset>
-                <label>Email address:</label>
-                {{ form_errors(form.email) }}
-                {{ form_widget(form.email) }}
-            </fieldset>
-
-            <fieldset>
-                <label>Gender:</label>
-                {{ form_errors(form.gender) }}
-                <ul>
-                    {% for child in form.gender %}
-                        <li>
-                            {{ form_widget(child) }}
-                            {{ child.vars.label }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </fieldset>
-
-            <fieldset class="grid-col-3">
-                <label>City:</label>
-                {{ form_errors(form.city) }}
-                {{ form_widget(form.city) }}
-            </fieldset>
-
-            <fieldset class="grid-col-3">
-                <label>Country:</label>
-                {{ form_errors(form.country) }}
-                {{ form_widget(form.country) }}
-            </fieldset>
-
-            <div class="grid-full-width">
-                <button type="submit">Save changes</button>
+                <div class="grid-full-width">
+                    <button type="submit">Save changes</button>
+                </div>
             </div>
-        </div>
-        {{form_end(form)}}
+        {{ form_end(form) }}
     </form>
 {% else  %}
     <h1>You don't have permission to access this page</h1>

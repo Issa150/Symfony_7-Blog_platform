@@ -1,0 +1,35 @@
+<aside>
+    <img src="{{ asset('assets/imgs/profile/' ~ (app.user.imageProfile|default('placeholder-general-img.png'))) }}" alt="">
+    <div class="user-info">
+        <h3>{{ app.user.firstname|upper }} {{ app.user.lastname|upper }}</h3>
+        <span>{{ app.user.city }},</span>
+        <span>{{ app.user.country }}</span>
+    </div>
+    <ul>
+        <a href="{{ path('backoffice_index') }}">Statistics</a>
+        <h4>Insights</h4>
+        {% for entity in entities %}
+            <li>
+                <a href="{{ path('backoffice_entity_list', { entity: entity }) }}"
+                {% if app.request.pathInfo == path('backoffice_entity_list', { entity: entity }) %}
+                    class="active"
+                {% endif %}>
+                
+                {{ entity == 'ContentType' ? 'Content Type' : entity }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {# {# <li><a class="{{ (app.request.get('posts') or app.request.get() is empty) ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'posts': ''}}) }}"><i class="fa-regular fa-newspaper"></i>Posts</a></li> #}
+        {# <li><a class="{{ app.request.get('thematics') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'thematics': ''}}) }}"><i class="fa-solid fa-layer-group"></i>Themes</a></li>
+        <li><a class="{{ app.request.get('categories') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'categories': ''}}) }}"><i class="fa-solid fa-rectangle-list"></i>Categories</a></li> #}
+        {# {% if app.user.role == "owner" %}
+        {% endif %} #}
+    </ul>
+    <br>
+    <ul>
+        <h4>Management</h4>
+        {# <li><a class="{{ app.request.get('publications_insight') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'publications_insight': ''}}) }}"><i class="fa-solid fa-rectangle-list"></i>Publications insight</a></li> #}
+        {# <li><a class="{{ app.request.get('members') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'members': ''}}) }}"><i class="fa-solid fa-users-gear"></i>Members</a></li> #}
+    </ul>
+</aside>

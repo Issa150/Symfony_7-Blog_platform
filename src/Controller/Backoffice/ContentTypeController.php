@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 // #[Route('/content/type')]
 class ContentTypeController extends AbstractController
 {
-    // #[Route('backoffice/content-type/', name: 'app_content_type_index', methods: ['GET'])]
+    // #[Route('backoffice/content-type/', name: 'content_type_index', methods: ['GET'])]
     // public function index(ContentTypeRepository $contentTypeRepository): Response
     // {
     //     return $this->render('content_type/index.html.twig', [
@@ -36,9 +36,10 @@ class ContentTypeController extends AbstractController
             return $this->redirectToRoute('app_content_type_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('content_type/new.html.twig', [
+        return $this->render('backoffice/index.html.twig', [
             'content_type' => $contentType,
             'form' => $form,
+            'entities' => ['Categories','ContentType','Posts',],
         ]);
     }
 
@@ -50,7 +51,7 @@ class ContentTypeController extends AbstractController
     //     ]);
     // }
 
-    #[Route('backoffice/content-type/{id}/edit', name: 'app_content_type_edit', methods: ['GET', 'POST'])]
+    #[Route('backoffice/content-type/{id}/edit', name: 'content_type_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ContentType $contentType, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ContentTypeType::class, $contentType);
@@ -59,16 +60,18 @@ class ContentTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_backoffice_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('backoffice_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('content_type/edit.html.twig', [
+        // return $this->render('content_type/edit.html.twig', [
+        return $this->render('backoffice/index.html.twig', [
             'content_type' => $contentType,
             'form' => $form,
+            'entities' => ['Posts','ContentType','Categories'],
         ]);
     }
 
-    #[Route('backoffice/content-type/{id}', name: 'app_content_type_delete', methods: ['POST'])]
+    #[Route('backoffice/content-type/{id}', name: 'content_type_delete', methods: ['POST'])]
     public function delete(Request $request, ContentType $contentType, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contentType->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +79,6 @@ class ContentTypeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_backoffice_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('backoffice_index', [], Response::HTTP_SEE_OTHER);
     }
 }

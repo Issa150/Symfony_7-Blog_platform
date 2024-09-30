@@ -16,60 +16,44 @@
     <img src="{{ asset('assets/imgs/banner/' ~ (app.user.imageCover|default('initial-banner.jpg'))) }}" alt="">
 </header>
 <main class="container">
-    <aside>
-        <img src="{{ asset('assets/imgs/profile/' ~ (app.user.imageProfile|default('placeholder-general-img.png'))) }}" alt="">
-        <div class="user-info">
-            <h3>{{ app.user.firstname|upper }} {{ app.user.lastname|upper }}</h3>
-            <span>{{ app.user.city }},</span>
-            <span>{{ app.user.country }}</span>
-        </div>
-        <ul>
-            <h4>Insights</h4>
-            {% for entity in entities %}
-                <li>
-                    <a href="{{ path('app_backoffice_entity_list', { entity: entity }) }}"
-                    {% if app.request.pathInfo == path('app_backoffice_entity_list', { entity: entity }) %}
-                        class="active"
-                    {% endif %}>
-                    
-                    {{ entity == 'ContentType' ? 'Content Type' : entity }}
-                    </a>
-                </li>
-            {% endfor %}
 
-            {# {# <li><a class="{{ (app.request.get('posts') or app.request.get() is empty) ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'posts': ''}}) }}"><i class="fa-regular fa-newspaper"></i>Posts</a></li> #}
-            {# <li><a class="{{ app.request.get('thematics') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'thematics': ''}}) }}"><i class="fa-solid fa-layer-group"></i>Themes</a></li>
-            <li><a class="{{ app.request.get('categories') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'categories': ''}}) }}"><i class="fa-solid fa-rectangle-list"></i>Categories</a></li> #}
-            {# {% if app.user.role == "owner" %}
-            {% endif %} #}
-        </ul>
-        <br>
-        <ul>
-            <h4>Management</h4>
-            {# <li><a class="{{ app.request.get('publications_insight') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'publications_insight': ''}}) }}"><i class="fa-solid fa-rectangle-list"></i>Publications insight</a></li> #}
-            {# <li><a class="{{ app.request.get('members') ? 'active' : '' }}" href="{{ path('app_backoffice_index', {'query': {'members': ''}}) }}"><i class="fa-solid fa-users-gear"></i>Members</a></li> #}
-        </ul>
-    </aside>
+    {% include "components/_backoffice_asider.twig" %}
+
     <div class="info-detail">
          
-        {% if app.request.pathInfo == '/backoffice/' or (app.request.attributes.get('_route_params')['entity'] is defined and app.request.attributes.get('_route_params')['entity'] == 'Posts') %}
-            {{ include('backoffice/partials/all_posts.html.twig') }}
-        {% elseif app.request.attributes.get('_route_params')['entity'] == 'ContentType' %}
-            {{ include('backoffice/partials/contentType.html.twig') }}
-        {% elseif app.request.attributes.get('_route_params')['entity'] == 'Categories' %}
-            {{ include('backoffice/partials/categories.html.twig') }} 
+        {# Veiwign list of each entity #}
+        {# {% if app.request.pathInfo == '/backoffice/' or (app.request.attributes.get('_route_params')['entity'] is defined and app.request.attributes.get('_route_params')['entity'] == 'Posts') %} #}
+        {% if app.request.get('_route') == 'backoffice_index' %}
+            {{ include('backoffice/partials/backoffice.statistic.twig') }}
+        {# {% elseif app.request.attributes.get('_route_params')['entity'] == 'ContentType' %} #}
+        {# {# {% elseif path('backoffice_entity_list', {entity: 'ContentType'}) %}  #}
+        {% elseif app.request.get('_route') == 'backoffice_entity_list' and app.request.attributes.get('_route_params')['entity'] == 'ContentType' %}
+            {{ include('backoffice/partials/all_contentType.html.twig') }}
+        {% elseif app.request.get('_route') == 'backoffice_entity_list' and app.request.attributes.get('_route_params')['entity'] == 'Categories' %}
+            {{ include('backoffice/partials/all_categories.html.twig') }} 
+        {% elseif app.request.get('_route') == 'backoffice_entity_list' and app.request.attributes.get('_route_params')['entity'] == 'Posts' %}
+            {{ include('backoffice/partials/all_posts.html.twig') }} 
         
 
-        {% elseif path('post_new') %}
-            {{ include('post/new.html.twig') }}
-        {% elseif path('post_edit', {'id': id}) %}
-            {{ include('post/edit.html.twig', {'id': id}) }}
-        {% elseif path('content_type_new') %}
+        {# Replacing CRUD forms of each entity based on choice on click on entity #}
+        {% elseif app.request.get('_route') == 'backoffice_posts_new' %}
+            {{ include('posts/new.html.twig') }}
+        {% elseif app.request.get('_route') == 'backoffice_posts_edit' %}
+            {{ include('posts/edit.html.twig') }}
+        {# {% elseif app.request.get('_route') == 'backoffice_posts_delete' %}
+            {{ include('posts/edit.html.twig') }} #}
+
+
+        {# {% elseif path('content_type_new') %} #}
+        {% elseif app.request.get('_route') == 'app_content_type_new' %}
             {{ include('content_type/new.html.twig') }}
-        {% elseif path('content_type_edit', {'id': id}) %}
+        {% elseif app.request.get('_route') == 'content_type_edit' %}
+            {{ include('content_type/edit.html.twig') }}
+        {% elseif app.request.get('_route') == 'content_type_delete' %}
             {{ include('content_type/edit.html.twig', {'id': id}) }}
         {% endif %}
     </div>
 </main>
 
 {% endblock %}
+{# {% block footer %}{% endblock %} #}

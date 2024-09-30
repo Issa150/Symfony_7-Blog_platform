@@ -14,7 +14,7 @@ dd
   <div class="control_bar">
     <!-- <button class="btn openDialog" id="open-modal">Create new <i class="fa-regular fa-square-plus"></i></button> -->
     <a
-      href="{{ path('app_backoffice_index', { add_post: true }) }}"
+      href="{{ path('backoffice_posts_new') }}"
       
       class="btn openDialog"
       id="open-modal"
@@ -56,17 +56,23 @@ dd
         <!-- Action btns -->
         <div class="btns-container">
           <a
-            href="{{ path('backoffice_posts_edit', { id: data.id }) }}"
+            {# href="{{ path('backoffice_posts_edit', { id: data.id }) }}" #}
+            href="{{ path('backoffice_posts_edit', {id: data.id}) }}"
+            
            
             class="btn btn-link success"
             >Modifier</a
           >
-          <a
+          {# <a
             href="{{ path('backoffice_posts_delete', { id: data.id }) }}"
            
             class="btn btn-link delete"
             >Suprimer</a
-          >
+          > #}
+          <form method="post" action="{{ path('backoffice_posts_delete', {'id': data.id}) }}" style="display: inline-block;" class="btn btn-link delete form-btn-delete" >
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ data.id) }}">
+            <button type="submit" style="background: transparent; padding:0;margin:0;">Delete</button>
+          </form>
         </div>
         <!-- Cells -->
         <div class="grid-cell">
